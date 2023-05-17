@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript</title>
+
+    <script>
+
+        // EXAMPLE
+        const cart = ['mobile', 'laptop', 'watch', 'computer']
+
+        // PROMISE
+        // Production Part
+        const createOrder1 = cart => {
+            const myPromise = new Promise((resolve, reject) => {
+                if (!cart) {
+                    const err = new Error('Cart is not Valid')
+                    reject(err)
+                } else {
+                    const orderId = Math.random().toString(36).slice(2)
+                    if (orderId) {
+                        setTimeout(() => {
+                            resolve(orderId)
+                        }, 2000)
+                    }
+                }
+            })
+            return myPromise;
+        }
+
+        // Consumer Part
+        createOrder1(cart)
+            .then(orderId => {
+                console.log('Promise => ', orderId)
+                return orderId
+            })
+            .catch((error) => console.log(error.message))
+
+        // Promise State
+        // console.log(createOrder1(cart));
+
+
+
+        // PROMISE CHAINING
+        // Production Part1
+        const createOrder2 = cart => {
+            const myPromise = new Promise((resolve, reject) => {
+                if (!cart) {
+                    const err = new Error('Cart is not Valid')
+                    reject(err)
+                } else {
+                    const orderId = Math.random().toString(36).slice(2)
+                    if (orderId) {
+                        setTimeout(() => {
+                            resolve(orderId)
+                        }, 2000)
+                    }
+                }
+            })
+            return myPromise;
+        }
+
+        // Production Part2
+        const proceedToPayment2 = orderId => {
+            const myPromise = new Promise((resolve, reject) => {
+                resolve(`Payment Successful for ${orderId}`);
+            })
+            return myPromise;
+        }
+
+        // Production Part3
+        const updateWallet = param => {
+            const myPromise = new Promise((resolve, reject) => {
+                if (param) {
+                    resolve(`Wallet Successfully Updated`);
+                } else {
+                    reject('Something went wrong')
+                }
+            })
+            return myPromise;
+        }
+
+
+        // Consumer Part
+        createOrder2(cart)
+            .then(orderId => {
+                console.log('Promise Chaining => ', orderId)
+                return orderId
+            })
+            .then(orderId => {
+                return proceedToPayment2(orderId)
+            })
+            .then(paymentInfo => {
+                console.log(paymentInfo);
+                return paymentInfo
+            })
+            .then(paymentInfo => {
+                return updateWallet(paymentInfo)
+            })
+            .then(walletInfo => {
+                console.log(walletInfo);
+            })
+            .catch((error) => console.log(error.message))
+
+        // Promise Chaining State
+        // console.log(createOrder2(cart));
+
+
+    </script>
+
+</head>
+
+<body>
+    <div style="text-align: center; margin-top: 40px;">
+        <h2>JavaScript Promise & Chaining</h2>
+        <p>(Go to console to check output)</p>
+    </div>
+
+    <div style="padding: 40px;">
+        <h4>Promise:</h4>
+        <p>Promise is an object that represents the eventual completion (or failure)
+            of an asynchronous operation and its resulting value.</p>
+        <p>Promise actually attaches function nor pass like callback, we have complete control
+            with us in it.</p>
+        <p>Promise contains result & state.</p>
+        <p>Result consists on reslove & reject</p>
+        <p>A Promise is in one of these states:</p>
+        <ul>
+            <li>Pending: initial state, neither fulfilled nor rejected.</li>
+            <li>Fulfilled: meaning that the operation was completed successfully.</li>
+            <li>Rejected: meaning that the operation failed.</li>
+        </ul>
+    </div>
+</body>
+
+</html>
